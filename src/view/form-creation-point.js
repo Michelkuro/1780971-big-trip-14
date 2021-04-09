@@ -165,5 +165,5 @@ export const createPointsCreationFormTemplate = () => {
                   </section>
                 </section>
               </form>
-            </li>`
+            </li>`;
 };
