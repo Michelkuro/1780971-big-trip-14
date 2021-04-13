@@ -5,6 +5,7 @@ import {createSortTemplate} from './view/sort';
 import {createPointsContainerTemplate} from './view/points-container';
 import {createPointTemplate} from './view/point';
 import {createPointsCreationFormTemplate} from './view/form-creation-point';
+import './mock/point.js';
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
