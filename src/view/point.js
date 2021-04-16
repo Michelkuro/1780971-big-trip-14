@@ -1,9 +1,9 @@
-import dayjs from 'dayjs';
+import {isDateFormat} from '../utils.js';
 
 export const createPointTemplate = (point) => {
   const {date, cityName, additionalOptions, isFavorite, eventType, price, timeStart, timeFinish, eventIcon, timeDifference} = point;
 
-  const dateFormat = date !== null ? dayjs(date).format('MMM D') : '';
+  const dateFormat = isDateFormat(date, 'MMM D');
   const isFavoriteStar = isFavorite ? 'event__favorite-btn--active' : '';
   const createOffersTemplate = (offers) => {
     if (additionalOptions.length === 0) {

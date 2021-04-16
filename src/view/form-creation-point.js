@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
+import {isDateFormat} from '../utils.js';
 
 export const createPointsCreationFormTemplate = (point) => {
   const {date, cityName, eventType, photos, eventIcon, description, timeStart, timeFinish, additionalOptions, price} = point;
-  const dateFormat = date !== null ? dayjs(date).format('DD/MM/YY') : '';
+  const dateFormat = isDateFormat(date, 'DD/MM/YY');
 
   const createPhotosTemplate = (photos) => {
     if (photos) {
