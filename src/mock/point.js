@@ -10,7 +10,7 @@ const getRandomInteger = (a = 0, b = 1) => {
 const generateRandomDate = () => {
   const maxDaysGap = 31;
   const daysGap = getRandomInteger(1, maxDaysGap);
-  return dayjs().add(daysGap, 'day').format('MMM D');
+  return dayjs().add(daysGap, 'day').toDate();
 };
 
 const generateRandomEvent = () => {
@@ -28,13 +28,22 @@ const generateRandomCityName = () => {
   return cityNames[getRandomInteger(0, cityNames.length - 1)];
 };
 
+const generateRandomChecked = () => {
+  if(getRandomInteger(0, 1)){
+    return 'checked';
+  }else{
+    return '';
+  }
+};
+
 const generateRandomOffer = () => {
   const offers = ['Switch to comfort', 'Add luggage', 'Add meal', 'Choose seats', 'Travel by train', 'Add breakfast', 'Book tickets', 'Lunch in city', 'Rent a car'];
-  const offer = {};
+  const offer = [];
   for (let i = 0; i < getRandomInteger(0, offers.length - 1); i++) {
     offer[i] = {
       title: offers[getRandomInteger(0, offers.length - 1)],
       price: getRandomInteger(20, 200),
+      checked: generateRandomChecked(),
     };
   }
   return offer;
@@ -53,6 +62,20 @@ const getRandomDescription = () => {
     description.push(descriptions[getRandomInteger(0, descriptions.length - 1)]);
   }
   return description.join();
+};
+const getRandomPhotos = () => {
+  const photos = [
+    'img/photos/1.jpg',
+    'img/photos/2.jpg',
+    'img/photos/3.jpg',
+    'img/photos/4.jpg',
+    'img/photos/5.jpg',
+  ];
+  const photo = [];
+  for (let i = 0; i < getRandomInteger(1, photos.length - 1); i++) {
+    photo.push(photos[getRandomInteger(0, photos.length - 1)]);
+  }
+  return photo;
 };
 
 const generateRandomTime = () => {
@@ -96,9 +119,10 @@ export const generatePoint = () => {
     eventType: getEvent.typeEvent,
     eventIcon: getEvent.iconEvent,
     cityName: generateRandomCityName(),
-    price: `€ ${getRandomInteger(20, 200)}`,
+    price: getRandomInteger(20, 200),
     additionalOptions: generateRandomOffer(),
     isFavorite: Boolean(getRandomInteger(0, 1)),
     description: getRandomDescription(),
+    photos: getRandomPhotos(),
   };
 };
