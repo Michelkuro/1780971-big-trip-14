@@ -12,7 +12,7 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const renderElement = (container, element, place) => {
+export const render = (container, element, place) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN:
       container.prepend(element);
@@ -28,10 +28,6 @@ export const createElement = (template) => {
   newElement.innerHTML = template;
 
   return newElement.firstChild;
-};
-
-export const renderTemplate = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
 };
 
 export const isDateFormat = (date, format) => {
