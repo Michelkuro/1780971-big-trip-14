@@ -1,4 +1,6 @@
-export const createPointEditingFormTemplate = () =>{
+import {createElement} from '../utils';
+
+const createPointEditingFormTemplate = () =>{
   return`<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
@@ -160,3 +162,22 @@ export const createPointEditingFormTemplate = () =>{
               </form>
             </li>`;
 };
+
+export default class PointEditingForm {
+  constructor(){
+    this._element = null;
+  }
+  getTemplate(){
+    return createPointEditingFormTemplate();
+  }
+  getElement(){
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement(){
+    this._element = null;
+  }
+}
+

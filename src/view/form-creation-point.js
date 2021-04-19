@@ -1,6 +1,6 @@
-import {isDateFormat} from '../utils.js';
+import {isDateFormat, createElement} from '../utils';
 
-export const createPointsCreationFormTemplate = (point) => {
+const createPointsCreationFormTemplate = (point) => {
   const {date, cityName, eventType, photos, eventIcon, description, timeStart, timeFinish, additionalOptions, price} = point;
   const dateFormat = isDateFormat(date, 'DD/MM/YY');
 
@@ -157,3 +157,23 @@ export const createPointsCreationFormTemplate = (point) => {
               </form>
             </li>`;
 };
+
+export default class PointsCreationForm {
+  constructor(point){
+    this._point = point;
+    this._element = null;
+  }
+  getTemplate(){
+    return createPointsCreationFormTemplate(this._point);
+  }
+  getElement(){
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement(){
+    this._element = null;
+  }
+}
+

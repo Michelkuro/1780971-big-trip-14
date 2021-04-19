@@ -1,12 +1,12 @@
-import {createSiteMenuTemplate} from './view/menu';
-import {createInformationAboutTripTemplate} from './view/information-about-trip';
-import {createFiltersTemplate} from './view/filters';
-import {createSortTemplate} from './view/sort';
+import SiteMenuView from './view/menu';
+import InformationAboutTripView from './view/information-about-trip';
+import FiltersView from './view/filters';
+import SortView from './view/sort';
 import {createPointsContainerTemplate} from './view/points-container';
-import {createPointTemplate} from './view/point';
-import {createPointsCreationFormTemplate} from './view/form-creation-point';
+import PointView from './view/point';
+import PointsCreationFormView from './view/form-creation-point';
 import {generatePoint} from './mock/point';
-import {renderTemplate} from './utils.js';
+import {renderTemplate, renderElement, RenderPosition} from './utils.js';
 
 const POINT_COUNT = 3;
 
@@ -18,15 +18,15 @@ const MainElement = document.querySelector('.trip-main'),
   FiltersContainer = MainElement.querySelector('.trip-controls__filters'),
   ContentContainer = MainContentContainer.querySelector('.trip-events');
 
-renderTemplate(NavigationContainer, createSiteMenuTemplate(), 'beforeend');
-renderTemplate(MainElement, createInformationAboutTripTemplate(), 'afterbegin');
-renderTemplate(FiltersContainer, createFiltersTemplate(), 'beforeend');
-renderTemplate(ContentContainer, createSortTemplate(), 'beforeend');
+renderElement(NavigationContainer, new SiteMenuView().getElement(), RenderPosition.BEFOREEND);
+renderElement(MainElement, new InformationAboutTripView().getElement(), RenderPosition.AFTERBEGIN);
+renderElement(FiltersContainer, new FiltersView().getElement(), RenderPosition.BEFOREEND);
+renderElement(ContentContainer, new SortView().getElement(), RenderPosition.BEFOREEND);
 renderTemplate(ContentContainer, createPointsContainerTemplate(), 'beforeend');
 
 const PointsContainer = MainContentContainer.querySelector('.trip-events__list');
 
 for (let i = 0; i < POINT_COUNT; i++) {
-  renderTemplate(PointsContainer, createPointTemplate(points[i]), 'beforeend');
+  renderElement(PointsContainer, new PointView(points[i]).getElement(), RenderPosition.BEFOREEND);
 }
-renderTemplate(PointsContainer, createPointsCreationFormTemplate(points[points.length - 1]), 'afterbegin');
+renderElement(PointsContainer, new PointsCreationFormView(points[points.length - 1]).getElement(), RenderPosition.AFTERBEGIN);
