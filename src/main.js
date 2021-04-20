@@ -29,12 +29,8 @@ const renderPoint = (container, point, position) => {
   const replaceFormToCard = () => {
     container.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
   };
-  pointComponent.setEditClickHandler(() => {
-    replaceCardToForm();
-  });
-  pointEditComponent.setEditSubmitHandler(() => {
-    replaceFormToCard();
-  });
+  pointComponent.setEditClickHandler(replaceCardToForm);
+  pointEditComponent.setEditSubmitHandler(replaceFormToCard);
   render(container, pointComponent.getElement(), position);
 };
 
