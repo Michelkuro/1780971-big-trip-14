@@ -1,4 +1,5 @@
-import {isDateFormat, createElement} from '../utils';
+import {isDateFormat} from '../utils';
+import Abstract from './abstract';
 
 const createPointsCreationFormTemplate = (point) => {
   const {date, cityName, eventType, photos, eventIcon, description, timeStart, timeFinish, additionalOptions, price} = point;
@@ -158,22 +159,12 @@ const createPointsCreationFormTemplate = (point) => {
             </li>`;
 };
 
-export default class PointsCreationForm {
+export default class PointsCreationForm extends Abstract{
   constructor(point){
+    super();
     this._point = point;
-    this._element = null;
   }
   getTemplate(){
     return createPointsCreationFormTemplate(this._point);
   }
-  getElement(){
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement(){
-    this._element = null;
-  }
 }
-

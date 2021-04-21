@@ -22,20 +22,15 @@ const MainElement = document.querySelector('.trip-main'),
 
 const renderPoint = (container, point, position) => {
   const pointComponent = new PointView(point);
-  const pointEditComponent = new PointEditingFormView(point);
+  const pointEditComponent = new PointEditingFormView();
   const replaceCardToForm = () => {
     container.replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
   };
   const replaceFormToCard = () => {
     container.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
   };
-  pointComponent.getElement().querySelector('.event__rollup-btn').addEventListener('click', ()=>{
-    replaceCardToForm();
-  });
-  pointEditComponent.getElement().querySelector('form').addEventListener('submit', (evt)=>{
-    evt.preventDefault();
-    replaceFormToCard();
-  });
+  pointComponent.setEditClickHandler(replaceCardToForm);
+  pointEditComponent.setEditSubmitHandler(replaceFormToCard);
   render(container, pointComponent.getElement(), position);
 };
 

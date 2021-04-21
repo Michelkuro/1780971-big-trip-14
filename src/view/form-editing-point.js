@@ -1,7 +1,7 @@
-import {createElement} from '../utils';
+import Abstract from './abstract';
 
-const createPointEditingFormTemplate = () =>{
-  return`<li class="trip-events__item">
+const createPointEditingFormTemplate = () => {
+  return `<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
                   <div class="event__type-wrapper">
@@ -163,21 +163,21 @@ const createPointEditingFormTemplate = () =>{
             </li>`;
 };
 
-export default class PointEditingForm {
-  constructor(){
-    this._element = null;
+export default class PointEditingForm extends Abstract {
+  constructor() {
+    super();
+    this._editSubmitHandler = this._editSubmitHandler.bind(this);
   }
-  getTemplate(){
+  getTemplate() {
     return createPointEditingFormTemplate();
   }
-  getElement(){
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
+  _editSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.editSubmit();
   }
-  removeElement(){
-    this._element = null;
+  setEditSubmitHandler(callback) {
+    this._callback.editSubmit = callback;
+    this.getElement().querySelector('form').addEventListener('submit', this._editSubmitHandler);
   }
 }
 
