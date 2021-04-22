@@ -1,9 +1,5 @@
 import dayjs from 'dayjs';
-
-export const RenderPosition = {
-  AFTERBEGIN: 'afterbegin',
-  BEFOREEND: 'beforeend',
-};
+import {generatePoint} from './mock/point';
 
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -11,6 +7,15 @@ export const getRandomInteger = (a = 0, b = 1) => {
 
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
+
+const POINT_COUNT = 3;
+export const points = new Array(POINT_COUNT + 1).fill().map(generatePoint);
+
+export const RenderPosition = {
+  AFTERBEGIN: 'afterbegin',
+  BEFOREEND: 'beforeend',
+};
+
 
 export const render = (container, element, place) => {
   switch (place) {
