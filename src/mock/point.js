@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import {getRandomInteger} from '../utils';
+import {nanoid} from 'nanoid';
 
 const generateRandomDate = () => {
   const maxDaysGap = 31;
@@ -106,6 +107,7 @@ const generateRandomTime = () => {
 export const generatePoint = () => {
   const getEvent = generateRandomEvent();
   return {
+    id: nanoid(),
     date: generateRandomDate(),
     timeStart: generateRandomTime()[0],
     timeFinish: generateRandomTime()[1],

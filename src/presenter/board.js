@@ -1,10 +1,10 @@
 import SortView from '../view/sort';
 import PointsContainerView from '../view/points-container';
-import PointView from '../view/point';
-import PointEditingFormView from '../view/form-editing-point';
 import BoardView from '../view/board';
 import {render, RenderPosition} from '../utils.js';
 import NoPointsView from '../view/no-points';
+import PointPresenter from './point';
+import {updateItem} from '../utils';
 
 export default class Board {
   constructor(boardContainer) {
@@ -13,35 +13,29 @@ export default class Board {
     this._sortComponent = new SortView();
     this._pointsContainerComponent = new PointsContainerView();
     this._noPoints = new NoPointsView();
+    this._pointPresenter = {};
+
+    this._handlePointChange = this._handlePointChange.bind(this);
   }
 
   init(boardPoints) {
     if (boardPoints) {
       this._boardPoints = boardPoints.slice();
     }
-    render(this._boardContainer, this._boardComponent.getElement(), RenderPosition.BEFOREEND);
-    render(this._boardComponent.getElement(), this._pointsContainerComponent.getElement(), RenderPosition.BEFOREEND);
+    render(this._boardContainer, this._boardComponent, RenderPosition.BEFOREEND);
+    render(this._boardComponent, this._pointsContainerComponent, RenderPosition.BEFOREEND);
 
     this._renderBoard();
   }
 
   _renderSort() {
-    render(this._boardComponent.getElement(), this._sortComponent.getElement(), RenderPosition.AFTERBEGIN);
+    render(this._boardComponent, this._sortComponent, RenderPosition.AFTERBEGIN);
   }
 
   _renderPoint(point) {
-    const pointComponent = new PointView(point);
-    const pointEditComponent = new PointEditingFormView();
-
-    const replaceCardToForm = () => {
-      this._pointsContainerComponent.getElement().replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
-    };
-    const replaceFormToCard = () => {
-      this._pointsContainerComponent.getElement().replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
-    };
-    pointComponent.setEditClickHandler(replaceCardToForm);
-    pointEditComponent.setEditSubmitHandler(replaceFormToCard);
-    render(this._pointsContainerComponent.getElement(), pointComponent.getElement(), RenderPosition.BEFOREEND);
+    const pointPresenter = new PointPresenter(this._pointsContainerComponent, this._handlePointChange);
+    pointPresenter.init(point);
+    this._pointPresenter[point.id] = pointPresenter;
   }
 
   _renderPoints(from, to) {
@@ -50,8 +44,13 @@ export default class Board {
     });
   }
 
-  _renderNoPoints(){
-    render(this._boardComponent.getElement(), this._noPoints.getElement(), RenderPosition.AFTERBEGIN);
+  _renderNoPoints() {
+    render(this._boardComponent, this._noPoints, RenderPosition.AFTERBEGIN);
+  }
+
+  _handlePointChange(updatedTask) {
+    this._boardPoints = updateItem(this._boardPoints, updatedTask);
+    this._pointPresenter[updatedTask.id].init(updatedTask);
   }
 
   _renderBoard() {
