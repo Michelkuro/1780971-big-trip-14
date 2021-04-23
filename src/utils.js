@@ -8,8 +8,8 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const POINT_COUNT = 3;
-export const points = new Array(POINT_COUNT + 1).fill().map(generatePoint);
+const POINT_COUNT = 4;
+export const points = new Array(POINT_COUNT).fill().map(generatePoint);
 
 export const RenderPosition = {
   AFTERBEGIN: 'afterbegin',

@@ -4,6 +4,7 @@ import PointView from '../view/point';
 import PointEditingFormView from '../view/form-editing-point';
 import BoardView from '../view/board';
 import {render, RenderPosition} from '../utils.js';
+import NoPointsView from '../view/no-points';
 
 export default class Board {
   constructor(boardContainer) {
@@ -11,6 +12,7 @@ export default class Board {
     this._boardComponent = new BoardView();
     this._sortComponent = new SortView();
     this._pointsContainerComponent = new PointsContainerView();
+    this._noPoints = new NoPointsView();
   }
 
   init(boardPoints) {
@@ -48,7 +50,15 @@ export default class Board {
     });
   }
 
+  _renderNoPoints(){
+    render(this._boardComponent.getElement(), this._noPoints.getElement(), RenderPosition.AFTERBEGIN);
+  }
+
   _renderBoard() {
+    if (this._boardPoints.length === 0) {
+      this._renderNoPoints();
+      return;
+    }
     this._renderSort();
     this._renderPoints();
   }
