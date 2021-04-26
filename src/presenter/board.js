@@ -14,7 +14,7 @@ export default class Board {
     this._pointsContainerComponent = new PointsContainerView();
     this._noPoints = new NoPointsView();
     this._pointPresenter = {};
-
+    this._handleModeChange = this._handleModeChange.bind(this);
     this._handlePointChange = this._handlePointChange.bind(this);
   }
 
@@ -33,7 +33,7 @@ export default class Board {
   }
 
   _renderPoint(point) {
-    const pointPresenter = new PointPresenter(this._pointsContainerComponent, this._handlePointChange);
+    const pointPresenter = new PointPresenter(this._pointsContainerComponent, this._handlePointChange, this._handleModeChange);
     pointPresenter.init(point);
     this._pointPresenter[point.id] = pointPresenter;
   }
@@ -46,6 +46,12 @@ export default class Board {
 
   _renderNoPoints() {
     render(this._boardComponent, this._noPoints, RenderPosition.AFTERBEGIN);
+  }
+
+  _handleModeChange() {
+    Object
+      .values(this._pointPresenter)
+      .forEach((presenter) => presenter.resetView());
   }
 
   _handlePointChange(updatedTask) {
